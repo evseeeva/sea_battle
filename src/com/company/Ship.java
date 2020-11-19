@@ -3,26 +3,36 @@ package com.company;
 import java.util.List;
 
 public class Ship {
-    private shipStatus status;
+
+    private shipRotation rotation;
     private List<Cell> decks;
-
-    enum shipStatus {
-        alive,
-        injured,
-        killed;
+    private int size;
+    enum shipRotation {
+       horizontal,
+        vertical;
     }
 
-    public Ship(List<Cell> decks) {
+    public Ship(List<Cell> decks,shipRotation rotation ) {
         this.decks = decks;
-        this.status = shipStatus.alive;
+        this.size = this.decks.size();
+        this.rotation = rotation;
     }
 
-    public shipStatus getStatus() {
-        return status;
+    public int getSize() {
+        return size;
     }
+  public boolean isKilled(){
+        int count=0;
+      for (Cell c: getDecks()) {
+          if (c.getStatus().equals(Cell.Status.hit))count++;
+      }
+      if (count==getDecks().size()) return true;
+      else
+      return false;
+  }
 
-    public void setStatus(shipStatus status) {
-        this.status = status;
+    public shipRotation getRotation() {
+        return rotation;
     }
 
     public List<Cell> getDecks() {
